@@ -1,0 +1,25 @@
+{
+    "mqtt": {
+        "host": "10.0.110.154",
+        "port": 1883,
+        "topic": "sensor/70ff2d82-972e-11e6-8bde-4485001bc64b/data/test"
+    },
+    
+    "sensors": {
+        "Sensor 1": {
+            "c1": 12,"c2": "test1"
+        },
+        "Sensor 2": {
+             "c1": 12,"c2": "test2"
+        },
+        "Sensor 3": {
+            "c1": 12,"c2": "test3"
+        },
+        "Sensor 4": {
+            "c1": 12,"c2": "test4"
+        },
+        "Sensor 5": {
+            "c1": 12,"c2": "test5"
+        }
+    }
+}
