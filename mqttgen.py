@@ -20,19 +20,20 @@ def generate(host, port, topic, sensors, message, interval,iThread):
 
     keys = list(sensors.keys())
     interval_secs = interval/ 1000.0
-    val = 0
+    loop = 0
     #Start timer
     start = timeit.default_timer()
-    while val<(message):
+    #iterate till the end last message
+    while loop<(message):
         sensor_id = random.choice(keys)
         sensor = sensors[sensor_id]
-        val = val + 1
+        loop = loop + 1
         data = {
-            "id": sensor_id,
-            "value": val
+            # "id": sensor_id,
+            # "value": loop
         }
-        #columns from json file
-        for key in ["c1", "c2"]:
+        #columns from json file 
+        for key,val in sensor.items():
             value = sensor.get(key)
 
             if value is not None:
@@ -40,7 +41,7 @@ def generate(host, port, topic, sensors, message, interval,iThread):
 
         payload = json.dumps(data)
 
-        #Uncomment this to check the pushing to sensor signals
+        #Uncomment this to check the sensor signals sent to broker
         #print("%s: %s" % (topic, payload))
 
         mqttc.publish(topic, payload)
@@ -48,8 +49,9 @@ def generate(host, port, topic, sensors, message, interval,iThread):
     stop = timeit.default_timer()
     #Publish the execution time for pushing the data
     print("Thread" + str(iThread + 1) + "=" + str(round((message / (stop - start)), 2)) + "msg/sec")
+    print("Thread" + str(iThread + 1) + "=" + str(round((message / (stop - start)), 2)) + "msg/sec")
 
-def main(iThread,message,interval):
+def main(message,interval,iThread):
     """main entry point, load and validate config and call generate"""
     config_path = "config.json"
     try:
