@@ -11,7 +11,8 @@ Running:-
 python mqttgen.py NoOfMessages Interval(ms) ThreadCount
 
 Example:-
-python mqttgen.py 1000 10 2
+python3 mqttgen.py 1000 10 2
+python mqttgen.py 1000 10 2 (based on the python version)
 
 Configuration
 -------------
