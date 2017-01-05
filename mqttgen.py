@@ -28,27 +28,15 @@ def generate(host, port, topic, sensors, message, interval,iThread):
         sensor_id = random.choice(keys)
         sensor = sensors[sensor_id]
         loop = loop + 1
-        data = {
-            # "id": sensor_id,
-            # "value": loop
-        }
-        #columns from json file 
-        for key,val in sensor.items():
-            value = sensor.get(key)
-
-            if value is not None:
-                data[key] = value
-
-        payload = json.dumps(data)
+        payload = json.dumps(sensor)
 
         #Uncomment this to check the sensor signals sent to broker
-        #print("%s: %s" % (topic, payload))
+        # print("%s: %s" % (topic, payload))
 
         mqttc.publish(topic, payload)
         time.sleep(interval_secs)
     stop = timeit.default_timer()
     #Publish the execution time for pushing the data
-    print("Thread" + str(iThread + 1) + "=" + str(round((message / (stop - start)), 2)) + "msg/sec")
     print("Thread" + str(iThread + 1) + "=" + str(round((message / (stop - start)), 2)) + "msg/sec")
 
 def main(message,interval,iThread):
@@ -61,7 +49,7 @@ def main(message,interval,iThread):
             sensors = config.get("sensors")
 
             if not sensors:
-                print("no sensors specified in config, nothing to do")
+                print("no sensors specified in config.json")
                 return
 
             host = mqtt_config.get("host", "localhost")
@@ -74,9 +62,11 @@ def main(message,interval,iThread):
 
 if __name__ == '__main__':
     if len(sys.argv) == 4:
-        #for multithreading
+       #for multithreading
         for iThread in range(int(sys.argv[3])):
-            Thread(target=main(iThread,int(sys.argv[1]),int(sys.argv[2]))).start()
+            Thread(target=main, args=(int(sys.argv[1]),int(sys.argv[2]),iThread)).start();
     else:
        print("Pass all the required parameters => mqttgen.py messageCounts messageInterval NoOfThread")
-    # main(100000,1000,0)
+    main(10,0,2)
+    # for iThread in range(5):
+    #     Thread(target=main, args=(1, 0, iThread)).start();
