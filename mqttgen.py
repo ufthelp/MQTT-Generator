@@ -67,6 +67,6 @@ if __name__ == '__main__':
             Thread(target=main, args=(int(sys.argv[1]),int(sys.argv[2]),iThread)).start();
     else:
        print("Pass all the required parameters => mqttgen.py messageCounts messageInterval NoOfThread")
-    main(10,0,2)
+ 
     # for iThread in range(5):
     #     Thread(target=main, args=(1, 0, iThread)).start();
